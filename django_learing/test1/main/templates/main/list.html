@@ -1,0 +1,22 @@
+{% extends "main/base.html" %}
+{% block title %}View List{% endblock %}
+
+{% block content %}
+<button style="width: 120px;" onclick="window.location.href='{% url 'view' %}'">Back to View</button>
+    <h1>{{ ls.name }}</h1>
+    <form method="post" action="#">
+        {% csrf_token %}
+        <ul>
+            {% for item in ls.item_set.all %}
+                {% if item.complete %}
+                    <li><input type="checkbox" value="clicked" name="c{{ item.id }}" checked>{{ item.text }}</li>
+                {% else %}
+                    <li><input type="checkbox" value="clicked" name="c{{ item.id }}">{{ item.text }}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <input type="text" name="new">
+        <button type="submit" name="newItem" value="newItem">Add Item</button>
+        <button type="submit" name="save" value="save">Save</button>
+    </form>
+{% endblock %}
